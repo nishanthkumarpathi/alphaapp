@@ -1,0 +1,29 @@
+name: NextJS Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify the Output Folder
+        run: ls -l out
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: out
+          path: out
