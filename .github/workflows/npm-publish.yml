@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      
+
 jobs:
   job1:
     name: My Name is Job1
@@ -14,11 +14,22 @@ jobs:
         run: echo "First Step in Job 1"
 
       - name: Create a File - Job 1
-        run: touch test.txt
+        run: echo "job1 file" > job1.txt
     
   job2:
     name: My Name is Job2
     runs-on: ubuntu-latest
     steps:
+      - name: Create a File - Job 2
+        run: echo "job2 file" > job2.txt
+
       - name: Verify the File - Job 2
-        run : ls -l
+        run : ls -l job2.txt
+
+  job3:
+    name: My Name is Job3
+    runs-on: ubuntu-latest
+    needs: [job1, job2]
+    steps:
+      - name: Check the files are created
+        run : ls -l      
